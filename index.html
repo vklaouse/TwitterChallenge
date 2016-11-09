@@ -18,23 +18,15 @@
 		<script type="text/javascript" src="/socket.io/socket.io.js" ></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0/pixi.min.js"></script>
 		<script type="text/javascript" >
-      // init PIXI
-      // create an new instance of a pixi stage
-      var container = new PIXI.Container();
+		var style = {
+			backgroundColor: 0x1099bb,
+		}
+			var renderer = PIXI.autoDetectRenderer(800, 600, style);
+			document.body.appendChild(renderer.view);
 
-      // create a renderer instance.
-      var renderer = PIXI.autoDetectRenderer(500, 500, {
-    backgroundColor: 0x65C25D
-});
-
-      $('#twitterstream').append(renderer.view);
-
-      var graphics = new PIXI.Graphics();
-      graphics.beginFill(0xFFFFFF);
-      graphics.lineStyle(1, 0xFF0000);
-      graphics.drawRect(20, 20, 150, 150);
-      container.addChild(graphics);
-      renderer.render(container);
+			// create the root of the scene graph
+			var stage = new PIXI.Container();
+			var height = 90;
 
 			/**
 			*
@@ -77,12 +69,30 @@
 			});
 
 			/**
-			*
+			* retirer ou modifier tweet.user.name à cause des warning
 			**/
 
 			socket.on('tweet', function(tweet){
-				$('#twitterstream').prepend('<p id="'+ tweet.user.name +'" ><em> ' + tweet.text + '</em></p>');
+				var basicText = new PIXI.Text( '<p>'+tweet.user.name + ' : ' + tweet.text + '</p>');
+				basicText.x = 30;
+				basicText.y = height += 30;
+
+				stage.addChild(basicText);
+
+
+				// start animating
+				animate();
+				
 			});
+
+
+			function animate() {
+
+				
+
+				// render the root container
+				renderer.render(stage);
+			}
 
 		</script>
 	</body>
