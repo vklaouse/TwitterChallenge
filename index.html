@@ -13,11 +13,12 @@
 			</form>
 		</div>
 		<div id="user"></div>
-		<div id="twitterstream" style="height: auto; width: 900px; border: solid 1px black;" ></div>
+		<div id="twitterstream" style="height: auto; width: 900px; border: solid 1px black; position:relative;" ></div>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="/socket.io/socket.io.js" ></script>
-		<script type="text/javascript" >
 
+		<script type="text/javascript" >
+		
 			var socket = io.connect('http://localhost:8080');
 			$('#loginform').submit(function(event){
 				event.preventDefault();
@@ -31,15 +32,16 @@
 			});
 
 			socket.on('newuser', function(user){
-				$('#user').append('<p id="'+ user.username +'" ><em>' + user.username + ' a rejoint le Chat !</em></p>');
+				$('#user').append('<p id="'+ user.username +'" ><em>' + user.username + ' a rejoint le TwitterChallenge !</em></p>');
 			});
 
 			socket.on('decoUser', function(user){
 				$('#'+ user.username +'').remove();
 			});
 
-
-
+			socket.on('tweet', function(tweet){
+				$('#twitterstream').prepend('<p id="'+ tweet.user.name +'" ><em> ' + tweet.text + ' a rejoint le TwitterChallenge !</em></p>');
+			});
 
 		</script>
 	</body>
