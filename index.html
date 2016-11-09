@@ -13,34 +13,75 @@
 			</form>
 		</div>
 		<div id="user"></div>
-		<div id="twitterstream" style="height: auto; width: 900px; border: solid 1px black; position:relative;" ></div>
+		<div id="twitterstream" style="height: auto; width: 90%; border: solid 1px black; position:relative;" ></div>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="/socket.io/socket.io.js" ></script>
-
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0/pixi.min.js"></script>
 		<script type="text/javascript" >
-		
+      // init PIXI
+      // create an new instance of a pixi stage
+      var container = new PIXI.Container();
+
+      // create a renderer instance.
+      var renderer = PIXI.autoDetectRenderer(500, 500, {
+    backgroundColor: 0x65C25D
+});
+
+      $('#twitterstream').append(renderer.view);
+
+      var graphics = new PIXI.Graphics();
+      graphics.beginFill(0xFFFFFF);
+      graphics.lineStyle(1, 0xFF0000);
+      graphics.drawRect(20, 20, 150, 150);
+      container.addChild(graphics);
+      renderer.render(container);
+
+			/**
+			*
+			**/
+
 			var socket = io.connect('http://localhost:8080');
+
+			/**
+			*
+			**/
+
 			$('#loginform').submit(function(event){
 				event.preventDefault();
 				socket.emit('login', {username: $('#username').val()
 				})
 			});
 
+			/**
+			*
+			**/
+
 			socket.on('logged', function(){
 				$('#login').fadeOut();
-
 			});
+
+			/**
+			*
+			**/
 
 			socket.on('newuser', function(user){
 				$('#user').append('<p id="'+ user.username +'" ><em>' + user.username + ' a rejoint le TwitterChallenge !</em></p>');
 			});
 
+			/**
+			*
+			**/
+
 			socket.on('decoUser', function(user){
 				$('#'+ user.username +'').remove();
 			});
 
+			/**
+			*
+			**/
+
 			socket.on('tweet', function(tweet){
-				$('#twitterstream').prepend('<p id="'+ tweet.user.name +'" ><em> ' + tweet.text + ' a rejoint le TwitterChallenge !</em></p>');
+				$('#twitterstream').prepend('<p id="'+ tweet.user.name +'" ><em> ' + tweet.text + '</em></p>');
 			});
 
 		</script>
