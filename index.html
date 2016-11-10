@@ -18,16 +18,7 @@
 		<script type="text/javascript" src="/socket.io/socket.io.js" ></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0/pixi.min.js"></script>
 		<script type="text/javascript" >
-		var style = {
-			backgroundColor: 0x1099bb,
-		}
-			var renderer = PIXI.autoDetectRenderer(800, 600, style);
-			document.body.appendChild(renderer.view);
-
-			// create the root of the scene graph
-			var stage = new PIXI.Container();
-			var height = 90;
-
+			
 			/**
 			*
 			**/
@@ -69,30 +60,62 @@
 			});
 
 			/**
-			* retirer ou modifier tweet.user.name à cause des warning
+			*  affichage des tweet 15 par 15 sinon pixi.js les efface automatiquement + crash si le flux de tweet est trop important (#trump) + probleme de doublon
 			**/
-
+			var i = 0;
 			socket.on('tweet', function(tweet){
-				var basicText = new PIXI.Text( '<p>'+tweet.user.name + ' : ' + tweet.text + '</p>');
-				basicText.x = 30;
-				basicText.y = height += 30;
-
+				if (i == 0){
+					var cnt = 1;
+					while (cnt < 16) {
+						$('body').append('<canvas id="s'+ cnt.toString() + '"></canvas> ');
+						cnt++;
+					}
+				}
+				i++;
+				if (i == 16){
+					i = 1;
+				}
+				n = 's'+ i.toString();
+				//var options = "{view: "+ n +" , backgroundColor : 0x1099bb}"; // Ne fonctionne pas
+				//var renderer = PIXI.autoDetectRenderer(800, 40, options);
+				if (n == 's1')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s1, backgroundColor : 0x1099bb});
+				else if (n == 's2')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s2, backgroundColor : 0x1099bb});
+				else if (n == 's3')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s3, backgroundColor : 0x1099bb});
+				else if (n == 's4')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s4, backgroundColor : 0x1099bb});
+				else if (n == 's5')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s5, backgroundColor : 0x1099bb});
+				else if (n == 's6')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s6, backgroundColor : 0x1099bb});
+				else if (n == 's7')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s7, backgroundColor : 0x1099bb});
+				else if (n == 's8')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s8, backgroundColor : 0x1099bb});
+				else if (n == 's9')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s9, backgroundColor : 0x1099bb});
+				else if (n == 's10')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s10, backgroundColor : 0x1099bb});
+				else if (n == 's11')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s11, backgroundColor : 0x1099bb});
+				else if (n == 's12')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s12, backgroundColor : 0x1099bb});
+				else if (n == 's13')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s13, backgroundColor : 0x1099bb});
+				else if (n == 's14')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s14, backgroundColor : 0x1099bb});
+				else if (n == 's15')
+					var renderer = PIXI.autoDetectRenderer(800, 40, {view: s15, backgroundColor : 0x1099bb});
+				document.body.appendChild(renderer.view);
+				var stage = new PIXI.Container();
+				var basicText = new PIXI.Text(tweet.user.name + ' : ' + tweet.text);
+				basicText.x = 5;
+				basicText.y = 5;
 				stage.addChild(basicText);
-
-
-				// start animating
-				animate();
-				
-			});
-
-
-			function animate() {
-
-				
-
-				// render the root container
 				renderer.render(stage);
-			}
+			});
 
 		</script>
 	</body>
