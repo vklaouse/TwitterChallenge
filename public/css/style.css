@@ -1,0 +1,56 @@
+body {
+	margin:0;
+	padding:0;
+	font-family: sans-serif; 
+	background: url('../Explosion.jpeg') no-repeat center fixed; 
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+
+input {
+	background-color: #FFFFFF;
+	width: 400px;
+	height: 40px;
+	font-size: 20px;
+}
+
+canvas {
+	border-radius: 9px 9px 5px 5px;
+	padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding-top: 5px;
+}
+
+#login {
+	margin-top: -10px;
+	margin-left: -10px;
+	background-color: rgba(29, 33, 41, 0.7);
+	position: absolute;
+	width:102%;
+	height:105%;
+	text-decoration: none;
+	color: rgba(255, 255, 255, 1);
+}
+
+#loginform {
+	margin-top: 20%;
+	width: 400px;
+}
+
+#username {
+	width: 393px;
+	height: 26px;
+	font-size: 18px;
+}
+
+#canvaswait {
+	width:0px; 
+	height: 0px;
+}
+
+#user {
+	color: #FFFFFF;
+}

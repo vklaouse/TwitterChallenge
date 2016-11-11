@@ -1,16 +1,20 @@
 {
   "name": "twitterchallenge",
   "version": "1.0.0",
-  "description": "",
-  "main": "twitter.js",
+  "description": "Take the twitter stream Recover the twitter stream according to a hashtag to make a small game. ",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vklaouse/TwitterChallenge.git"
   },
-  "author": "",
+  "keywords": [
+    "twitterstream"
+  ],
+  "author": "Vivien Klaousen",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/vklaouse/TwitterChallenge/issues"

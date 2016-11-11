@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>TwitterChallenge</title>
+		<link rel="stylesheet" type="text/css" href="./css/style.css">
+	</head>
+	<body>
+		<center>
+			<div id="login">
+				<form action="/" id="loginform">
+					<h1>Entrer un Login</h1>
+					<input type="text" name="login" id="username">
+					<br/><br/>
+					<input type="submit" value="Enregistrer">
+				</form>
+			</div>
+		</center>
+		<div id="user"></div>
+		<div id="canvaswait"></div>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="/socket.io/socket.io.js" ></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0/pixi.min.js"></script>
+		<script type="text/javascript" src="js/client.js"></script>
+	</body>
+</html>

@@ -1,15 +1,23 @@
 /**
-*
+*   Dependencies
 **/
 
-var app = require('express')();
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
+var express = require('express');
+var app = express();
+var path = require('path');
 var ent = require('ent');
 var twit = require('twitter');
 
+app.set('port', 8080);
+app.use(express.static(path.join(__dirname, 'public')));
+var server = app.listen(app.get('port'), function() {
+    var port = server.address().port;
+});
+
+var io = require('socket.io').listen(server);
+
 /**
-*
+*   Connection to the twitter application
 **/
 
 twitter = new twit({
@@ -20,58 +28,57 @@ twitter = new twit({
 });
 
 /**
-*
-**/
-
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
-
-/**
-*
+*   Create a table for the users
 **/
 
 var users = {};
 
 /**
-*
+*   Connection to the socket
 **/
 
 io.sockets.on('connection', function(socket) {
     var pseudo = false;
+
+    /**
+    *  Sends the list of all users to the new user
+    **/
 
     for (var k in users){
         socket.emit('newuser', users[k]);
     }
 
     /**
-    *
+    *   Gives a name and a random id to the new user
     **/
 
     socket.on('login', function(user){
         pseudo = user;
-        users [pseudo.user] = user;
+        pseudo.username = ent.encode(pseudo.username);
+        var UserIdStr = user.id.toString();
+        pseudo.id = UserIdStr;
+        users [pseudo.id] = pseudo;
         socket.emit('logged');
-        socket.broadcast.emit('newuser', pseudo);
+        io.sockets.emit('newuser', pseudo);
+        io.sockets.emit('HideNewUser', pseudo);
     });
 
     /**
-    *
+    *   Destroys the informations of a user when he disconnect
     **/
 
     socket.on('disconnect', function(){
         if (!pseudo){
             return false;
         }
-        delete users[pseudo.username];
-        io.sockets.emit('decoUser', pseudo);
+        delete users[pseudo.id];
     });
 
     /**
-    *
+    *   Gets the twitter stream and sends him to client.js
     **/
 
-    twitter.stream('statuses/filter', { track: '#Trump' },
+    twitter.stream('statuses/filter', { track: '#Tpmp' },
         function(stream) {
  
         stream.on('data', function( tweet ) {
@@ -87,5 +94,3 @@ io.sockets.on('connection', function(socket) {
     });
 
 });
-
-server.listen(8080);
