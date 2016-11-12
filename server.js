@@ -1,3 +1,5 @@
+var hashtag = "#Clinton, #trump";
+
 /**
 *   Dependencies
 **/
@@ -78,7 +80,7 @@ io.sockets.on('connection', function(socket) {
     *   Gets the twitter stream and sends him to client.js
     **/
 
-    twitter.stream('statuses/filter', { track: '#Tpmp' },
+    twitter.stream('statuses/filter', { track: hashtag },
         function(stream) {
  
         stream.on('data', function( tweet ) {

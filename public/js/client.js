@@ -45,8 +45,24 @@ socket.on('HideNewUser', function(user){
 **/
 
 function destroyCanvas(id){
-	alert(id);
+	setTimeout(function() {
+		$('#'+id).hide();
+	}, 0);
 }
+
+/**
+*	Change the style of the Canvas hide
+**/
+
+
+function toggleDisplay(elmt)
+{
+   if(typeof elmt == "string")
+      elmt = document.getElementById(elmt);
+   if(elmt.style.display == "none")
+      elmt.style.display = "";
+}
+
 
 /**
 *  Display the Tweets on the Canvas
@@ -56,7 +72,7 @@ var i = 0;
 var oldTweet = null;
 var style = {
 	fontFamily : 'Arial',
-	fontSize : '14px',
+	fontSize : '13px',
 
 };
 socket.on('tweet', function(tweet){
@@ -76,40 +92,41 @@ socket.on('tweet', function(tweet){
 		//var options = "{view: "+ n +" , backgroundColor : 0xFFFFFF}"; // Doesn't work, i try but i had no choice D:
 		//var renderer = PIXI.autoDetectRenderer(800, 40, options);
 		if (n == 's1')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s1, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s1, backgroundColor : 0xFFFFFF});
 		else if (n == 's2')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s2, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s2, backgroundColor : 0xFFFFFF});
 		else if (n == 's3')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s3, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s3, backgroundColor : 0xFFFFFF});
 		else if (n == 's4')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s4, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s4, backgroundColor : 0xFFFFFF});
 		else if (n == 's5')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s5, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s5, backgroundColor : 0xFFFFFF});
 		else if (n == 's6')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s6, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s6, backgroundColor : 0xFFFFFF});
 		else if (n == 's7')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s7, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s7, backgroundColor : 0xFFFFFF});
 		else if (n == 's8')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s8, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s8, backgroundColor : 0xFFFFFF});
 		else if (n == 's9')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s9, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s9, backgroundColor : 0xFFFFFF});
 		else if (n == 's10')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s10, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s10, backgroundColor : 0xFFFFFF});
 		else if (n == 's11')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s11, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s11, backgroundColor : 0xFFFFFF});
 		else if (n == 's12')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s12, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s12, backgroundColor : 0xFFFFFF});
 		else if (n == 's13')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s13, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s13, backgroundColor : 0xFFFFFF});
 		else if (n == 's14')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s14, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s14, backgroundColor : 0xFFFFFF});
 		else if (n == 's15')
-			var renderer = PIXI.autoDetectRenderer(1100, 40, {view: s15, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s15, backgroundColor : 0xFFFFFF});
+		toggleDisplay(n);
 		document.body.appendChild(renderer.view);
 		var stage = new PIXI.Container();
 		var TweetText = tweet.text.replace(/\s/g," ");
 		var basicText = new PIXI.Text(tweet.user.name + ' : ' + TweetText, style);
-		basicText.x = 5;
+		basicText.x = 10;
 		basicText.y = 12;
 		stage.addChild(basicText);
 		renderer.render(stage);
