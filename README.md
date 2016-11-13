@@ -14,5 +14,5 @@ And run the server
 To interrupt the execution of the server
 *     `fg` + `Ctrl + c`
 
-You can change search hashtags
+You can change search hashtags (Without '#', they are automatically added)
 *     `./Configuration "YourFirstHashtag" "YourSecondtHashtag" "..."`
