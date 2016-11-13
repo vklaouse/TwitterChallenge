@@ -1,4 +1,4 @@
-var hashtag = "#Coucou"
+var hashtag = "#trump"
 
 /**
 *   Dependencies
