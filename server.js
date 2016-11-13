@@ -1,4 +1,4 @@
-var hashtag = "#Clinton, #trump";
+var hashtag = "#Coucou"
 
 /**
 *   Dependencies
@@ -90,9 +90,6 @@ io.sockets.on('connection', function(socket) {
         });
  
         stream.on('error', function ( error ) {
-            console.error(error);
         });
- 
     });
-
 });
