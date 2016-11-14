@@ -41,66 +41,67 @@ socket.on('HideNewUser', function(user){
 });
 
 /**
+*	Create the explosion animation
+**/
+
+$('body').append('<canvas id="Explosion" style="position:absolute; display:none; margin-top:0px; margin-left:0px;"></canvas>');
+var renderer = PIXI.autoDetectRenderer(1000, 40, { transparent: true, view: Explosion });
+document.body.appendChild(renderer.view);
+var stage = new PIXI.Container();
+PIXI.loader
+    .add('img/GIF/explosion1.png')
+    .add('img/GIF/explosion2.png')
+    .add('img/GIF/explosion3.png')
+    .add('img/GIF/explosion4.png')
+    .add('img/GIF/explosion5.png')
+    .add('img/GIF/explosion6.png')
+    .add('img/GIF/explosion7.png')
+    .add('img/GIF/explosion8.png')
+    .add('img/GIF/explosion9.png')
+    .add('img/GIF/explosion10.png')
+    .add('img/GIF/explosion11.png')
+    .add('img/GIF/explosion12.png')
+    .add('img/GIF/explosion13.png')
+    .add('img/GIF/explosion14.png')
+    .add('img/GIF/explosion15.png')
+    .add('img/GIF/explosion16.png')
+    .add('img/GIF/explosion17.png')
+    .load(onAssetsLoaded);
+
+function onAssetsLoaded()
+{
+    var explosionTextures = [];
+    var j;
+    for (j = 1; j < 17; j++) {
+         var texture = PIXI.Texture.fromFrame('img/GIF/explosion' + (j+1) + '.png');
+         explosionTextures.push(texture);
+    }
+
+    for (j = 0; j < 50; j++) {
+        var explosion = new PIXI.extras.MovieClip(explosionTextures);
+
+        explosion.position.x = Math.random() * 800;
+        explosion.position.y = Math.random() * 600;
+        explosion.anchor.x = 0.5;
+        explosion.anchor.y = 0.5;
+        explosion.rotation = Math.random() * Math.PI;
+        explosion.scale.set(0.75 + Math.random() * 0.5);
+        explosion.gotoAndPlay(Math.random() * 27);
+        stage.addChild(explosion);
+    }
+    requestAnimationFrame(animate);
+}
+function animate() {
+    renderer.render(stage);
+    requestAnimationFrame(animate);
+}
+		
+/**
 *	Click on a tweet and blow it up
 **/
 
-var k = 0;
 function destroyCanvas(event, id){
 	toggleDisplay('Explosion');
-	if (k == 0){
-		var renderer = PIXI.autoDetectRenderer(1000, 40, { transparent: true, view: Explosion });
-		document.body.appendChild(renderer.view);
-		var stage = new PIXI.Container();
-		//PIXI.loader.reset();
-		PIXI.loader
-		    .add('img/GIF/explosion1.png')
-		    .add('img/GIF/explosion2.png')
-		    .add('img/GIF/explosion3.png')
-		    .add('img/GIF/explosion4.png')
-		    .add('img/GIF/explosion5.png')
-		    .add('img/GIF/explosion6.png')
-		    .add('img/GIF/explosion7.png')
-		    .add('img/GIF/explosion8.png')
-		    .add('img/GIF/explosion9.png')
-		    .add('img/GIF/explosion10.png')
-		    .add('img/GIF/explosion11.png')
-		    .add('img/GIF/explosion12.png')
-		    .add('img/GIF/explosion13.png')
-		    .add('img/GIF/explosion14.png')
-		    .add('img/GIF/explosion15.png')
-		    .add('img/GIF/explosion16.png')
-		    .add('img/GIF/explosion17.png')
-		    .load(onAssetsLoaded);
-
-		function onAssetsLoaded()
-		{
-		    var explosionTextures = [];
-		    var j;
-		    for (j = 1; j < 17; j++) {
-		         var texture = PIXI.Texture.fromFrame('img/GIF/explosion' + (j+1) + '.png');
-		         explosionTextures.push(texture);
-		    }
-
-		    for (j = 0; j < 50; j++) {
-		        var explosion = new PIXI.extras.MovieClip(explosionTextures);
-
-		        explosion.position.x = Math.random() * 800;
-		        explosion.position.y = Math.random() * 600;
-		        explosion.anchor.x = 0.5;
-		        explosion.anchor.y = 0.5;
-		        explosion.rotation = Math.random() * Math.PI;
-		        explosion.scale.set(0.75 + Math.random() * 0.5);
-		        explosion.gotoAndPlay(Math.random() * 27);
-		        stage.addChild(explosion);
-		    }
-		    requestAnimationFrame(animate);
-		}
-		function animate() {
-		    renderer.render(stage);
-		    requestAnimationFrame(animate);
-		}
-		k = 1;
-	}
 	var x = event.clientX;
  	var y = event.clientY;
  	x -= 500;
@@ -145,8 +146,6 @@ socket.on('tweet', function(tweet){
 			$('#canvaswait').append('<canvas id="s'+ cnt.toString() + '" onclick="destroyCanvas(event, this.id);""></canvas>');
 			cnt++;
 		}
-		$('#canvaswait').append('<canvas id="Explosion" style="position:absolute; margin-top:0px; margin-left:0px;"></canvas>');
-			cnt++;
 		$('#canvaswait').hide();
 	}
 	if (oldTweet != tweet.id_str){
