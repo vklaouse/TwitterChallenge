@@ -5,6 +5,18 @@
 var socket = io.connect('http://localhost:8080');
 
 /**
+*
+**/
+
+socket.on('highScore' ,function(highScore){
+	bestScore = highScore;
+	$('#myScore').remove();
+	$('#bestScore').remove();
+	$('#score').append('<div class="score" id="myScore">Score: 0</div>');
+	$('#score').append('<div class="score" id="bestScore">Best Score: '+bestScore+'</div>');
+});
+
+/**
 *	Send an event to the socket
 **/
 
@@ -22,6 +34,7 @@ $('#loginform').submit(function(event){
 
 socket.on('logged', function(){
 	$('#login').fadeOut();
+
 });
 
 /**
@@ -44,7 +57,7 @@ socket.on('HideNewUser', function(user){
 *	Create the explosion animation
 **/
 
-$('body').append('<canvas id="Explosion" style="position:absolute; display:none; margin-top:0px; margin-left:0px;"></canvas>');
+$('body').append('<canvas id="Explosion" style="display:none;"></canvas>');
 var renderer = PIXI.autoDetectRenderer(1000, 40, { transparent: true, view: Explosion });
 document.body.appendChild(renderer.view);
 var stage = new PIXI.Container();
@@ -97,22 +110,41 @@ function animate() {
 }
 		
 /**
-*	Click on a tweet and blow it up
+*	Refreshes the best score
+**/
+
+var Score = 0;
+var bestScore = 0;
+socket.emit('score', Score);
+	socket.on('bestScore', function(newBestScore) {
+		bestScore = newBestScore;
+		$('#bestScore').remove();
+		$('#score').append('<div class="score" id="bestScore">Best Score: '+bestScore+'</div>');
+	});
+
+/**
+*	Click on a tweet and blow it up and give points
 **/
 
 function destroyCanvas(event, id){
+	Score += 10;
+	socket.emit('score', Score);
+	$('#myScore').remove();
+	$('#bestScore').remove();
+	$('#score').append('<div class="score" id="myScore">Score: '+Score+'</div>');
+	$('#score').append('<div class="score" id="bestScore">Best Score: '+bestScore+'</div>');
 	toggleDisplay('Explosion');
 	var x = event.clientX;
  	var y = event.clientY;
  	x -= 500;
- 	y -= 20;
+ 	y -= 70;
  	var elmt = document.getElementById('Explosion');
  	elmt.style.marginTop = y + "px";
  	elmt.style.marginLeft = x + "px";
 	setTimeout(function() {
 		$('#Explosion').hide();
+		$('#'+id).hide();
 	}, 500);
-	$('#'+id).hide();
 }
 
 /**
@@ -137,52 +169,51 @@ var oldTweet = null;
 var style = {
 	fontFamily : 'Arial',
 	fontSize : '13px',
+	fill: '#FFFFFF'
 };
 
 socket.on('tweet', function(tweet){
 	if (i == 0){
 		var cnt = 1;
-		while (cnt < 15) {
-			$('#canvaswait').append('<canvas id="s'+ cnt.toString() + '" onclick="destroyCanvas(event, this.id);""></canvas>');
+		while (cnt < 14) {
+			$('#canvaswait').append('<canvas id="s'+ cnt.toString() + '" style="border:solid 1px white;"onclick="destroyCanvas(event, this.id);""></canvas>');
 			cnt++;
 		}
 		$('#canvaswait').hide();
 	}
 	if (oldTweet != tweet.id_str){
 		i++
-		if (i == 15)
+		if (i == 14)
 			i = 1;
 		n = 's'+ i.toString();
 		//var options = "{view: "+ n +" , backgroundColor : 0xFFFFFF}"; // Doesn't work, i try but i had no choice D:
 		//var renderer = PIXI.autoDetectRenderer(800, 40, options);
 		if (n == 's1')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s1, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s1, transparent: true});
 		else if (n == 's2')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s2, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s2, transparent: true});
 		else if (n == 's3')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s3, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s3, transparent: true});
 		else if (n == 's4')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s4, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s4, transparent: true});
 		else if (n == 's5')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s5, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s5, transparent: true});
 		else if (n == 's6')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s6, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s6, transparent: true});
 		else if (n == 's7')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s7, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s7, transparent: true});
 		else if (n == 's8')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s8, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s8, transparent: true});
 		else if (n == 's9')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s9, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s9, transparent: true});
 		else if (n == 's10')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s10, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s10, transparent: true});
 		else if (n == 's11')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s11, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s11, transparent: true});
 		else if (n == 's12')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s12, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s12, transparent: true});
 		else if (n == 's13')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s13, backgroundColor : 0xFFFFFF});
-		else if (n == 's14')
-			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s14, backgroundColor : 0xFFFFFF});
+			var renderer = PIXI.autoDetectRenderer(1000, 40, {view: s13, transparent: true});
 		toggleDisplay(n);
 		document.body.appendChild(renderer.view);
 		var stage = new PIXI.Container();

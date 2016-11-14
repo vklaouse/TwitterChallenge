@@ -25,6 +25,7 @@ canvas {
 }
 
 #login {
+	text-shadow: 5px 5px #000000;
 	margin-top: -10px;
 	margin-left: -10px;
 	background-color: rgba(29, 33, 41, 0.7);
@@ -53,4 +54,27 @@ canvas {
 
 #user {
 	color: #FFFFFF;
+}
+
+#Explosion {
+	position:absolute;
+	margin-top:0px;
+	margin-left:0px;
+}
+
+#score {
+	position: relative;
+	margin-bottom: 0px;
+	width:100%;
+	height:45px;
+}
+
+.score {
+	font-size: 19px;
+	height: 30px;
+	width:200px;
+	display:inline-block;
+	color:#FFFFFF;
+	text-align: left;
+	padding-top:13px;
 }

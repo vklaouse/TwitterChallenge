@@ -1,4 +1,4 @@
-var hashtag = "#trump"
+var hashtag = "#Cocuou"
 
 /**
 *   Dependencies
@@ -34,6 +34,7 @@ twitter = new twit({
 **/
 
 var users = {};
+var bestScore = 0;
 
 /**
 *   Connection to the socket
@@ -41,6 +42,23 @@ var users = {};
 
 io.sockets.on('connection', function(socket) {
     var pseudo = false;
+
+    /**
+    *   Shows the best score to the new users
+    **/
+
+    socket.emit('highScore', bestScore);
+
+    /**
+    *   Sends the new best Score
+    **/
+
+    socket.on('score', function(Score){
+        if (Score > bestScore){
+            bestScore = Score;
+            io.sockets.emit('bestScore', bestScore);
+        }
+    });
 
     /**
     *  Sends the list of all users to the new user
