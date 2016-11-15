@@ -5,7 +5,7 @@
 var socket = io.connect('http://localhost:8080');
 
 /**
-*
+*	Show the score for the new users
 **/
 
 socket.on('highScore' ,function(highScore){
@@ -22,10 +22,17 @@ socket.on('highScore' ,function(highScore){
 
 $('#loginform').submit(function(event){
 	event.preventDefault();
-	socket.emit('login', {
-		username: $('#username').val(),
-		id: 'U'+ Math.random() * (10000 - 1) + 1
-	})
+	if ($('#username').val().length > 3){
+		socket.emit('login', {
+			username: $('#username').val(),
+			id: 'U'+ Math.random() * (10000 - 1) + 1
+		})
+	}
+	else{
+		champ = document.getElementById('username');
+		champ.style.borderColor = "#ff0000";
+	}
+
 });
 
 /**
@@ -34,11 +41,10 @@ $('#loginform').submit(function(event){
 
 socket.on('logged', function(){
 	$('#login').fadeOut();
-
 });
 
 /**
-*	Shows users connected when a user login
+*	Show users connected when a user login
 **/
 
 socket.on('newuser', function(user){
@@ -93,8 +99,8 @@ function onAssetsLoaded()
     for (j = 0; j < 50; j++) {
         var explosion = new PIXI.extras.MovieClip(explosionTextures);
 
-        explosion.position.x = Math.random() * 800;
-        explosion.position.y = Math.random() * 600;
+        explosion.position.x = Math.random() * 1000;
+        explosion.position.y = Math.random() * 40;
         explosion.anchor.x = 0.5;
         explosion.anchor.y = 0.5;
         explosion.rotation = Math.random() * Math.PI;
@@ -110,7 +116,7 @@ function animate() {
 }
 		
 /**
-*	Refreshes the best score
+*	Refresh the best score
 **/
 
 var Score = 0;

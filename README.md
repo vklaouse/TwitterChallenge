@@ -16,3 +16,5 @@ To interrupt the execution of the server
 
 You can change search hashtags (Without '#', they are automatically added)
 *     `./Configuration "YourFirstHashtag" "YourSecondtHashtag" "..."`
+
+Or you can manually change to configuration.js the first line (don't forget the hashtags before the words).

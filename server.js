@@ -1,5 +1,3 @@
-var hashtag = "#Cocuou"
-
 /**
 *   Dependencies
 **/
@@ -16,7 +14,13 @@ var server = app.listen(app.get('port'), function() {
     var port = server.address().port;
 });
 
+app.get('*', function(req, res){
+    res.status(404).send('Error 404 page not found');
+});
+
 var io = require('socket.io').listen(server);
+var tag = require('./configuration.js');
+var hashtag = tag.tag;
 
 /**
 *   Connection to the twitter application
@@ -44,13 +48,13 @@ io.sockets.on('connection', function(socket) {
     var pseudo = false;
 
     /**
-    *   Shows the best score to the new users
+    *   Show the best score to the new users
     **/
 
     socket.emit('highScore', bestScore);
 
     /**
-    *   Sends the new best Score
+    *   Send the new best Score
     **/
 
     socket.on('score', function(Score){
@@ -61,7 +65,7 @@ io.sockets.on('connection', function(socket) {
     });
 
     /**
-    *  Sends the list of all users to the new user
+    *  Send the list of all users to the new user
     **/
 
     for (var k in users){
@@ -69,7 +73,7 @@ io.sockets.on('connection', function(socket) {
     }
 
     /**
-    *   Gives a name and a random id to the new user
+    *   Give a name and a random id to the new user
     **/
 
     socket.on('login', function(user){
@@ -84,7 +88,7 @@ io.sockets.on('connection', function(socket) {
     });
 
     /**
-    *   Destroys the informations of a user when he disconnect
+    *   Destroy the informations of a user when he disconnect
     **/
 
     socket.on('disconnect', function(){
@@ -95,7 +99,7 @@ io.sockets.on('connection', function(socket) {
     });
 
     /**
-    *   Gets the twitter stream and sends him to client.js
+    *   Get the twitter stream and sends him to client.js
     **/
 
     twitter.stream('statuses/filter', { track: hashtag },
