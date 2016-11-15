@@ -224,6 +224,19 @@ socket.on('tweet', function(tweet){
 		document.body.appendChild(renderer.view);
 		var stage = new PIXI.Container();
 		var TweetText = tweet.text.replace(/\s/g," ");
+		var randomColor = Math.random() * (7 - 1) + 1;
+		if (randomColor <= 2)
+			style.fill = '#00FFFF';
+		else if (randomColor <= 3)
+			style.fill = '#FFFF00';
+		else if (randomColor <= 4)
+			style.fill = '#FF1493';
+		else if (randomColor <= 5)
+			style.fill = '#7CFC00';
+		else if (randomColor <= 6)
+			style.fill = '#FF0000';
+		else
+			style.fill = '#FFFFFF';
 		var basicText = new PIXI.Text(tweet.user.name + ' : ' + TweetText, style);
 		basicText.x = 10;
 		basicText.y = 12;
