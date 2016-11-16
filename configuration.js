@@ -1,4 +1,4 @@
-var tag = "#PeaceAndLove"
+var tag = "#PeaceAndLove";
 
 var consumerKey = '';
 var consumerSecret = '';
