@@ -19,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/vklaouse/TwitterChallenge/issues"
   },
-  "homepage": "https://github.com/vklaouse/TwitterChallenge#readme"
+  "homepage": "https://github.com/vklaouse/TwitterChallenge#readme",
+  "dependencies": {
+    "ent": "^2.2.0",
+    "express": "^4.14.0",
+    "socket.io": "^1.5.1",
+    "twitter": "^1.4.0"
+  }
 }

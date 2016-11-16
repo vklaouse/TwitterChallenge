@@ -7,6 +7,11 @@ When it's done open your terminal and run :
 
 To launch the project go to the folder TwitterChallenge, run in your terminal
 *     `cd TwitterChallenge`
+
+To install the project
+*     `npm install`
+
+You must install the connection codes to the api twitter in the configuration.js file
    
 And run the server
 *     `node server.js & open http://localhost:8080`
